@@ -1,0 +1,27 @@
+	<data name="editorBorderRadius_DisplayName" xml:space="preserve">
+		<value>Editor Border Radius</value>
+	</data>
+	<data name="editorBorderRadius_Description" xml:space="preserve">
+		<value>CSS border-radius for the editor (e.g. 4px, 8px, 0.5em)</value>
+	</data>
+	<data name="Editor_Background_Color" xml:space="preserve">
+		<value>Editor Background Color</value>
+	</data>
+	<data name="Editor_Background_Color_Desc" xml:space="preserve">
+		<value>Background color for the editor area (CSS color value).</value>
+	</data>
+	<data name="Editor_Border_Color" xml:space="preserve">
+		<value>Editor Border Color</value>
+	</data>
+	<data name="Editor_Border_Color_Desc" xml:space="preserve">
+		<value>Border color for the editor (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Color" xml:space="preserve">
+		<value>Toolbar Color</value>
+	</data>
+	<data name="Toolbar_Color_Desc" xml:space="preserve">
+		<value>Background color for the toolbar (CSS color value).</value>
+	</data>
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+</root>

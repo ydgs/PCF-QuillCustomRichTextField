@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="CustomControl" constructor="CustomRichTextField" version="0.0.1" display-name-key="CustomRichTextField" description-key="CustomRichTextField description" control-type="standard">
+    <external-service-usage enabled="false">
+    </external-service-usage>
+    <property name="Default" display-name-key="Default" description-key="Default value for the rich text input" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="HtmlText" display-name-key="HtmlText" description-key="HTML output from the editor" of-type="SingleLine.Text" usage="output" required="false" hidden="true" />
+    <property name="headingLevels" display-name-key="Heading Levels" description-key="Comma-separated heading levels to show (e.g. 1,2,3)" of-type="SingleLine.Text" usage="input" required="false" />
+  <!-- <property name="editorBackgroundColor" display-name-key="Editor_Background_Color" description-key="Editor_Background_Color_Desc" of-type="SingleLine.Text" usage="input" />
+  <property name="editorBorderColor" display-name-key="Editor_Border_Color" description-key="Editor_Border_Color_Desc" of-type="SingleLine.Text" usage="input" />
+  <property name="editorBorderRadius" display-name-key="editorBorderRadius_DisplayName" description-key="editorBorderRadius_Description" of-type="SingleLine.Text" usage="input" required="false" />
+  <property name="toolbarColor" display-name-key="Toolbar_Color" description-key="Toolbar_Color_Desc" of-type="SingleLine.Text" usage="input" /> -->
+    <property name="showBold" display-name-key="Show Bold" description-key="Show bold button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showItalic" display-name-key="Show Italic" description-key="Show italic button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showUnderline" display-name-key="Show Underline" description-key="Show underline button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showLink" display-name-key="Show Link" description-key="Show link button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showBlockquote" display-name-key="Show Blockquote" description-key="Show blockquote button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showCodeBlock" display-name-key="Show Code Block" description-key="Show code block button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showImage" display-name-key="Show Image" description-key="Show image button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showOrderedList" display-name-key="Show Ordered List" description-key="Show ordered list button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showBulletList" display-name-key="Show Bullet List" description-key="Show bullet list button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showFont" display-name-key="Show Font" description-key="Show font family dropdown" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showColor" display-name-key="Show Color" description-key="Show text and background color pickers" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showAlign" display-name-key="Show Align" description-key="Show text alignment options" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="showClean" display-name-key="Show Clean" description-key="Show clean formatting button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/CustomRichTextField.css" order="1" />
+      <css path="../node_modules/quill/dist/quill.snow.css" order="2" />
+    </resources>
+  </control>
+</manifest>

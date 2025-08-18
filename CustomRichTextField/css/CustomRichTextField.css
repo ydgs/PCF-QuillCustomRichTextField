@@ -1,0 +1,73 @@
+/* Make the Quill editor fill the container and allow resizing */
+.quill-outer-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Uncomment below to allow manual resize */
+  /* resize: vertical;
+  overflow: auto; */
+}
+
+#quill-editor {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+}
+
+.ql-container {
+  height: 100% !important;
+  min-height: 0 !important;
+  box-sizing: border-box;
+}
+.ql-editor {
+  height: 100% !important;
+  min-height: 0 !important;
+  box-sizing: border-box;
+}
+/* Add custom font mappings for Quill font dropdown */
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="arial"],
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="arial"] {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ql-font-arial {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="times-new-roman"],
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="times-new-roman"] {
+  font-family: 'Times New Roman', Times, serif;
+}
+.ql-font-times-new-roman {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="comic-sans"],
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="comic-sans"] {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+.ql-font-comic-sans {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+/* Quill custom styles for PCF Rich Text Field */
+
+#quill-editor,
+.ql-container {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ql-toolbar {
+  border-radius: 4px 4px 0 0;
+}
+
+.ql-editor {
+  min-height: 0;
+  height: 100%;
+  background: #fff;
+  border-radius: 0 0 4px 4px;
+  box-sizing: border-box;
+}
