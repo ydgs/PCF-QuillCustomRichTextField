@@ -89,6 +89,19 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
         this.createOrUpdateQuill(context);
     }
 
+    private applyBorderColors(element: HTMLElement, context: ComponentFramework.Context<IInputs>, prefix: string, defaultColor = "#ccc") {
+        const generalBorderColor = context.parameters[`${prefix}BorderColor` as keyof IInputs]?.raw;
+        const topColor = context.parameters[`${prefix}BorderTopColor` as keyof IInputs]?.raw || generalBorderColor || defaultColor;
+        const rightColor = context.parameters[`${prefix}BorderRightColor` as keyof IInputs]?.raw || generalBorderColor || defaultColor;
+        const bottomColor = context.parameters[`${prefix}BorderBottomColor` as keyof IInputs]?.raw || generalBorderColor || defaultColor;
+        const leftColor = context.parameters[`${prefix}BorderLeftColor` as keyof IInputs]?.raw || generalBorderColor || defaultColor;
+        
+        element.style.borderTop = `1px solid ${topColor}`;
+        element.style.borderRight = `1px solid ${rightColor}`;
+        element.style.borderBottom = `1px solid ${bottomColor}`;
+        element.style.borderLeft = `1px solid ${leftColor}`;
+    }
+
     private createOrUpdateQuill(context: ComponentFramework.Context<IInputs>) {
         // Remove old editor if exists
         if (this.quill) {
@@ -104,13 +117,8 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
     editorDiv.style.width = "100%";
     editorDiv.style.height = "100%";
     editorDiv.style.boxSizing = "border-box";
-    // // Apply user-selected background color
-    // editorDiv.style.background = context.parameters.editorBackgroundColor?.raw || "#fff";
-    // // Apply user-selected border color to the Quill editor div
-    // editorDiv.style.border = `1px solid ${context.parameters.editorBorderColor?.raw || "#ccc"}`;
-    // // Apply user-selected border radius
-    // const borderRadius = context.parameters.editorBorderRadius?.raw || "4px";
-    // editorDiv.style.borderRadius = borderRadius;
+    // Apply individual border colors to the Quill editor div
+    this.applyBorderColors(editorDiv, context, "editor");
     this.container.appendChild(editorDiv);
 
         // Determine heading levels from property (default to 1,2,3,4)
@@ -178,17 +186,10 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
             }
         });
 
-        // // Apply user-selected toolbar color
-        // const toolbarColor = context.parameters.toolbarColor?.raw || "#f3f3f3";
-        // // Wait for Quill to render toolbar, then set color
-        // setTimeout(() => {
-        //     if (this.container) {
-        //         const toolbarEl = this.container.querySelector('.ql-toolbar');
-        //         if (toolbarEl) {
-        //             (toolbarEl as HTMLElement).style.background = toolbarColor;
-        //         }
-        //     }
-        // }, 0);
+        // Apply user-selected colors efficiently
+        setTimeout(() => {
+            this.applyColorStyles(context);
+        }, 0);
 
         // Set initial value from Default property
         const initialValue = context.parameters.Default?.raw || "";
@@ -217,21 +218,186 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
         this.lastToolbarConfig = JSON.stringify(toolbar);
     }
 
+    private setupToolbarColorMonitoring(
+        toolbarEl: HTMLElement, 
+        backgroundColor?: string,
+        textColor?: string, 
+        iconColor?: string, 
+        dropdownColor?: string, 
+        dropdownTextColor?: string
+    ) {
+        // Clean up any existing monitoring
+        this.cleanupColorMonitoring(toolbarEl);
+
+        // Simple, efficient color application function
+        const applyColors = () => {
+            try {
+                if (backgroundColor) {
+                    document.documentElement.style.setProperty('--toolbar-background-color', backgroundColor);
+                }
+                
+                if (textColor) {
+                    document.documentElement.style.setProperty('--toolbar-text-color', textColor);
+                }
+                
+                if (iconColor) {
+                    document.documentElement.style.setProperty('--toolbar-icon-color', iconColor);
+                }
+                
+                if (dropdownColor) {
+                    document.documentElement.style.setProperty('--toolbar-dropdown-color', dropdownColor);
+                }
+                
+                if (dropdownTextColor) {
+                    document.documentElement.style.setProperty('--toolbar-dropdown-text-color', dropdownTextColor);
+                }
+            } catch (error) {
+                console.warn('Error applying toolbar colors:', error);
+            }
+        };
+
+        // Apply colors immediately
+        applyColors();
+
+        // Set up minimal monitoring - only when necessary
+        const observer = new MutationObserver((mutations) => {
+            let shouldUpdate = false;
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    shouldUpdate = true;
+                    break;
+                }
+            }
+            if (shouldUpdate) {
+                // Debounce the color application
+                setTimeout(applyColors, 50);
+            }
+        });
+
+        observer.observe(toolbarEl, {
+            childList: true,
+            subtree: true
+        });
+
+        // Store cleanup function
+        (toolbarEl as HTMLElement & { _colorCleanup?: () => void })._colorCleanup = () => {
+            observer.disconnect();
+        };
+    }
+
+    private cleanupColorMonitoring(toolbarEl: HTMLElement) {
+        const cleanup = (toolbarEl as HTMLElement & { _colorCleanup?: () => void })._colorCleanup;
+        if (cleanup) {
+            cleanup();
+            delete (toolbarEl as HTMLElement & { _colorCleanup?: () => void })._colorCleanup;
+        }
+    }
+
+    private isValidCSSColor(color: string): boolean {
+        if (!color || color.trim() === '') return false;
+        
+        // Create a temporary element to test the color
+        const tempElement = document.createElement('div');
+        tempElement.style.color = color;
+        return tempElement.style.color !== '';
+    }
+
+    private applyColorStyles(context: ComponentFramework.Context<IInputs>) {
+        if (!this.container) return;
+
+        // Get all color values with defaults and validation
+        const getValidColor = (paramName: keyof IInputs, defaultColor: string): string => {
+            const value = context.parameters[paramName]?.raw as string;
+            if (value && this.isValidCSSColor(value)) {
+                return value;
+            }
+            return defaultColor;
+        };
+
+        const editorBackgroundColor = getValidColor('editorBackgroundColor', '#ffffff');
+        const toolbarColor = getValidColor('toolbarColor', '#ffffff');
+        const toolbarTextColor = getValidColor('toolbarTextColor', '#444444');
+        const toolbarIconColor = getValidColor('toolbarIconColor', '#444444');
+        const toolbarDropdownColor = getValidColor('toolbarDropdownColor', '#ffffff');
+        const toolbarDropdownTextColor = getValidColor('toolbarDropdownTextColor', '#333333');
+
+        // Apply editor styles
+        const editorDiv = this.container.querySelector('#quill-editor') as HTMLDivElement | null;
+        if (editorDiv) {
+            this.applyBorderColors(editorDiv, context, "editor");
+        }
+        
+        const qlEditorEl = this.container.querySelector('.ql-editor') as HTMLElement | null;
+        if (qlEditorEl) {
+            qlEditorEl.style.background = editorBackgroundColor;
+        }
+        
+        // Apply toolbar styles
+        const toolbarEl = this.container.querySelector('.ql-toolbar') as HTMLElement | null;
+        if (toolbarEl) {
+            this.applyBorderColors(toolbarEl, context, "toolbar");
+            
+            // Set up efficient color monitoring
+            this.setupToolbarColorMonitoring(
+                toolbarEl, 
+                toolbarColor,
+                toolbarTextColor, 
+                toolbarIconColor,
+                toolbarDropdownColor,
+                toolbarDropdownTextColor
+            );
+        }
+    }
+
 
     /**
      * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
      */
     public updateView(context: ComponentFramework.Context<IInputs>): void {
-        // // Live update of editor background and border color
-        // const editorDiv = this.container?.querySelector('#quill-editor') as HTMLDivElement | null;
-        // if (editorDiv) {
-        //     editorDiv.style.background = context.parameters.editorBackgroundColor?.raw || "#fff";
-        //     editorDiv.style.border = `1px solid ${context.parameters.editorBorderColor?.raw || "#ccc"}`;
-        //     const borderRadius = context.parameters.editorBorderRadius?.raw || "4px";
-        //     editorDiv.style.borderRadius = borderRadius;
-        // }
-        // Rebuild toolbar if config changed
+        // Check if we need to rebuild the toolbar configuration
+        const shouldRebuildToolbar = this.shouldRebuildToolbar(context);
+        
+        if (shouldRebuildToolbar) {
+            this.createOrUpdateQuill(context);
+            return;
+        }
+
+        if (!this.quill) return;
+
+        // Apply color changes immediately and efficiently
+        this.applyColorStyles(context);
+
+        // Handle content updates
+        const newValue = context.parameters.Default?.raw || "";
+        
+        // Only update Quill if the Default property changed from outside (not from user typing)
+        if (
+            newValue !== this.lastDefaultValue &&
+            newValue !== this.htmlText &&
+            newValue !== this.quill.root.innerHTML &&
+            !this.isProgrammaticUpdate
+        ) {
+            if (!this.isValidHTML(newValue)) {
+                this.showError("Invalid HTML code. Please correct your input.");
+                return;
+            } else {
+                this.clearError();
+            }
+            
+            this.isProgrammaticUpdate = true;
+            try {
+                this.htmlText = newValue;
+                this.lastDefaultValue = newValue;
+                // Use dangerouslyPasteHTML to render HTML directly in Quill
+                this.quill.clipboard.dangerouslyPasteHTML(newValue, 'silent');
+            } finally {
+                this.isProgrammaticUpdate = false;
+            }
+        }
+    }
+
+    private shouldRebuildToolbar(context: ComponentFramework.Context<IInputs>): boolean {
         // Recompute toolbar config
         let headingLevels: (number | false)[] = [1, 2, 3, 4, false];
         let headingLevelsRaw: string | undefined = undefined;
@@ -242,6 +408,7 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
             const parsed = headingLevelsRaw.split(',').map((x: string) => parseInt(x.trim(), 10)).filter((x: number) => !isNaN(x));
             headingLevels = [...parsed, false];
         }
+        
         function getToggle(param: keyof IInputs, defaultValue = true) {
             const prop = context.parameters[param];
             if (prop && typeof prop.raw === 'boolean') {
@@ -249,6 +416,7 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
             }
             return defaultValue;
         }
+        
         // Declare all toggles before toolbar config
         const showBold = getToggle('showBold');
         const showItalic = getToggle('showItalic');
@@ -263,6 +431,7 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
         const showColor = getToggle('showColor');
         const showAlign = getToggle('showAlign');
         const showClean = getToggle('showClean');
+        
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const toolbar: any[] = [];
         toolbar.push([{ header: headingLevels }]);
@@ -286,6 +455,7 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
         if (showBulletList) lists.push({ list: "bullet" });
         if (lists.length) toolbar.push(lists);
         if (showClean) toolbar.push(["clean"]);
+        
         // Track all toolbar-related toggles for robust detection
         const toolbarConfig = JSON.stringify(toolbar);
         const togglesConfig = [
@@ -293,40 +463,18 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
             showOrderedList, showBulletList, showFont, showColor, showAlign, showClean
         ].join("|");
         const headingLevelsRawForCompare = headingLevelsRaw || "";
+        
         const lastConfig = this.lastToolbarConfig + "|" + this._lastHeadingLevelsRaw + "|" + (this._lastTogglesConfig || "");
         const newConfig = toolbarConfig + "|" + headingLevelsRawForCompare + "|" + togglesConfig;
+        
         if (newConfig !== lastConfig) {
-            this.createOrUpdateQuill(context);
             this.lastToolbarConfig = toolbarConfig;
             this._lastHeadingLevelsRaw = headingLevelsRawForCompare;
             this._lastTogglesConfig = togglesConfig;
-            return;
+            return true;
         }
-        if (!this.quill) return;
-        const newValue = context.parameters.Default?.raw || "";
-        // Only update Quill if the Default property changed from outside (not from user typing)
-        if (
-            newValue !== this.lastDefaultValue &&
-            newValue !== this.htmlText &&
-            newValue !== this.quill.root.innerHTML &&
-            !this.isProgrammaticUpdate
-        ) {
-            if (!this.isValidHTML(newValue)) {
-                this.showError("Invalid HTML code. Please correct your input.");
-                return;
-            } else {
-                this.clearError();
-            }
-            this.isProgrammaticUpdate = true;
-            try {
-                this.htmlText = newValue;
-                this.lastDefaultValue = newValue;
-                // Use dangerouslyPasteHTML to render HTML directly in Quill
-                this.quill.clipboard.dangerouslyPasteHTML(newValue, 'silent');
-            } finally {
-                this.isProgrammaticUpdate = false;
-            }
-        }
+        
+        return false;
     }
 
     /**
@@ -345,6 +493,14 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
      * i.e. cancelling any pending remote calls, removing listeners, etc.
      */
     public destroy(): void {
+        // Cleanup color monitoring
+        if (this.container) {
+            const toolbarEl = this.container.querySelector('.ql-toolbar') as HTMLElement | null;
+            if (toolbarEl) {
+                this.cleanupColorMonitoring(toolbarEl);
+            }
+        }
+        
         // Cleanup Quill instance and error div
         if (this.quill) {
             // Quill does not have a destroy method, but we can remove listeners and DOM

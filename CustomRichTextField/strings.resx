@@ -22,6 +22,78 @@
 	<data name="Toolbar_Color_Desc" xml:space="preserve">
 		<value>Background color for the toolbar (CSS color value).</value>
 	</data>
+	<data name="Toolbar_Text_Color" xml:space="preserve">
+		<value>Toolbar Text Color</value>
+	</data>
+	<data name="Toolbar_Text_Color_Desc" xml:space="preserve">
+		<value>Text color for toolbar buttons (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Icon_Color" xml:space="preserve">
+		<value>Toolbar Icon Color</value>
+	</data>
+	<data name="Toolbar_Icon_Color_Desc" xml:space="preserve">
+		<value>Icon color for toolbar buttons (CSS color value).</value>
+	</data>
+	<data name="Editor_Border_Top_Color" xml:space="preserve">
+		<value>Editor Top Border Color</value>
+	</data>
+	<data name="Editor_Border_Top_Color_Desc" xml:space="preserve">
+		<value>Top border color for the editor (CSS color value).</value>
+	</data>
+	<data name="Editor_Border_Right_Color" xml:space="preserve">
+		<value>Editor Right Border Color</value>
+	</data>
+	<data name="Editor_Border_Right_Color_Desc" xml:space="preserve">
+		<value>Right border color for the editor (CSS color value).</value>
+	</data>
+	<data name="Editor_Border_Bottom_Color" xml:space="preserve">
+		<value>Editor Bottom Border Color</value>
+	</data>
+	<data name="Editor_Border_Bottom_Color_Desc" xml:space="preserve">
+		<value>Bottom border color for the editor (CSS color value).</value>
+	</data>
+	<data name="Editor_Border_Left_Color" xml:space="preserve">
+		<value>Editor Left Border Color</value>
+	</data>
+	<data name="Editor_Border_Left_Color_Desc" xml:space="preserve">
+		<value>Left border color for the editor (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Border_Top_Color" xml:space="preserve">
+		<value>Toolbar Top Border Color</value>
+	</data>
+	<data name="Toolbar_Border_Top_Color_Desc" xml:space="preserve">
+		<value>Top border color for the toolbar (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Border_Right_Color" xml:space="preserve">
+		<value>Toolbar Right Border Color</value>
+	</data>
+	<data name="Toolbar_Border_Right_Color_Desc" xml:space="preserve">
+		<value>Right border color for the toolbar (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Border_Bottom_Color" xml:space="preserve">
+		<value>Toolbar Bottom Border Color</value>
+	</data>
+	<data name="Toolbar_Border_Bottom_Color_Desc" xml:space="preserve">
+		<value>Bottom border color for the toolbar (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Border_Left_Color" xml:space="preserve">
+		<value>Toolbar Left Border Color</value>
+	</data>
+	<data name="Toolbar_Border_Left_Color_Desc" xml:space="preserve">
+		<value>Left border color for the toolbar (CSS color value).</value>
+	</data>
+	<data name="Toolbar_Dropdown_Color" xml:space="preserve">
+		<value>Header, Font & Align Dropdown Background Color</value>
+	</data>
+	<data name="Toolbar_Dropdown_Color_Desc" xml:space="preserve">
+		<value>Background color for heading, font family, and text align dropdowns (CSS color value). Does not affect text/background color pickers.</value>
+	</data>
+	<data name="Toolbar_Dropdown_Text_Color" xml:space="preserve">
+		<value>Header, Font & Align Dropdown Text Color</value>
+	</data>
+	<data name="Toolbar_Dropdown_Text_Color_Desc" xml:space="preserve">
+		<value>Text color for heading, font family, and text align dropdowns (CSS color value). Does not affect text/background color pickers.</value>
+	</data>
 <?xml version="1.0" encoding="utf-8"?>
 <root>
 </root>

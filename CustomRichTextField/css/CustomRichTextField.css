@@ -1,4 +1,8 @@
 /* Make the Quill editor fill the container and allow resizing */
+.control-container {
+  border: none;
+}
+
 .quill-outer-container {
   height: 100%;
   width: 100%;
@@ -24,6 +28,51 @@
   height: 100% !important;
   min-height: 0 !important;
   box-sizing: border-box;
+}
+
+/* Toolbar icon and text styling support with higher specificity */
+.ql-toolbar.ql-snow {
+  border: 1px solid #ccc;
+}
+
+.ql-toolbar.ql-snow .ql-formats {
+  margin-right: 15px;
+}
+
+/* Force toolbar button colors with !important */
+.ql-toolbar.ql-snow button,
+.ql-toolbar.ql-snow button:hover,
+.ql-toolbar.ql-snow button:focus {
+  color: inherit !important;
+}
+
+/* Force SVG icon colors */
+.ql-toolbar.ql-snow button svg,
+.ql-toolbar.ql-snow button:hover svg,
+.ql-toolbar.ql-snow button:focus svg {
+  fill: currentColor !important;
+}
+
+/* Target specific Quill icon classes */
+.ql-toolbar.ql-snow .ql-stroke {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+.ql-toolbar.ql-snow .ql-fill {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+.ql-toolbar.ql-snow .ql-even {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Target dropdown arrows and other elements */
+.ql-toolbar.ql-snow .ql-picker-label::before,
+.ql-toolbar.ql-snow .ql-picker-options .ql-picker-item::before {
+  color: currentColor !important;
 }
 /* Add custom font mappings for Quill font dropdown */
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="arial"],
@@ -70,4 +119,174 @@
   background: #fff;
   border-radius: 0 0 4px 4px;
   box-sizing: border-box;
+}
+
+/* CSS Custom Properties for maximum toolbar color control */
+:root {
+  --toolbar-background-color: #ffffff;
+  --toolbar-text-color: #444444;
+  --toolbar-icon-color: #444444;
+  --toolbar-dropdown-color: #ffffff;
+  --toolbar-dropdown-text-color: #333333;
+}
+
+/* Ultimate toolbar styling with maximum specificity */
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow .ql-toolbar,
+div[data-testid="rich-text-field"] .ql-toolbar.ql-snow,
+body .ql-toolbar.ql-snow {
+    color: var(--toolbar-text-color) !important;
+    background-color: var(--toolbar-background-color) !important;
+}
+
+/* All text elements in toolbar */
+.ql-toolbar.ql-snow *,
+.ql-toolbar.ql-snow button,
+.ql-toolbar.ql-snow span,
+.ql-toolbar.ql-snow .ql-picker-label,
+.ql-toolbar.ql-snow .ql-picker-item,
+body .ql-toolbar.ql-snow * {
+    color: var(--toolbar-text-color) !important;
+}
+
+/* All icon elements with ultimate specificity */
+.ql-toolbar.ql-snow .ql-stroke,
+.ql-toolbar.ql-snow svg .ql-stroke,
+body .ql-toolbar.ql-snow .ql-stroke,
+html body .ql-toolbar.ql-snow .ql-stroke {
+    stroke: var(--toolbar-icon-color) !important;
+    fill: none !important;
+}
+
+.ql-toolbar.ql-snow .ql-fill,
+.ql-toolbar.ql-snow svg .ql-fill,
+body .ql-toolbar.ql-snow .ql-fill,
+html body .ql-toolbar.ql-snow .ql-fill {
+    fill: var(--toolbar-icon-color) !important;
+    stroke: none !important;
+}
+
+.ql-toolbar.ql-snow .ql-even,
+body .ql-toolbar.ql-snow .ql-even {
+    fill: var(--toolbar-icon-color) !important;
+}
+
+/* Nuclear option: target all SVG elements */
+.ql-toolbar.ql-snow svg,
+.ql-toolbar.ql-snow svg *,
+body .ql-toolbar.ql-snow svg,
+body .ql-toolbar.ql-snow svg * {
+    fill: var(--toolbar-icon-color) !important;
+    stroke: var(--toolbar-icon-color) !important;
+    color: var(--toolbar-icon-color) !important;
+}
+
+/* Dropdown-specific styling ONLY for heading and font selectors */
+/* Header dropdown styling */
+.ql-toolbar.ql-snow .ql-header .ql-picker,
+.ql-toolbar.ql-snow .ql-header .ql-picker-label,
+body .ql-toolbar.ql-snow .ql-header .ql-picker,
+body .ql-toolbar.ql-snow .ql-header .ql-picker-label {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+    border: none !important;
+}
+
+/* Header dropdown options container */
+.ql-toolbar.ql-snow .ql-header .ql-picker-options,
+body .ql-toolbar.ql-snow .ql-header .ql-picker-options {
+    background-color: var(--toolbar-dropdown-color) !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Header dropdown individual items */
+.ql-toolbar.ql-snow .ql-header .ql-picker-item,
+body .ql-toolbar.ql-snow .ql-header .ql-picker-item {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+}
+
+/* Header dropdown item hover states */
+.ql-toolbar.ql-snow .ql-header .ql-picker-item:hover,
+body .ql-toolbar.ql-snow .ql-header .ql-picker-item:hover {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+    opacity: 0.8 !important;
+}
+
+/* Font dropdown styling */
+.ql-toolbar.ql-snow .ql-font .ql-picker,
+.ql-toolbar.ql-snow .ql-font .ql-picker-label,
+body .ql-toolbar.ql-snow .ql-font .ql-picker,
+body .ql-toolbar.ql-snow .ql-font .ql-picker-label {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+    border: none !important;
+}
+
+/* Font dropdown options container */
+.ql-toolbar.ql-snow .ql-font .ql-picker-options,
+body .ql-toolbar.ql-snow .ql-font .ql-picker-options {
+    background-color: var(--toolbar-dropdown-color) !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Font dropdown individual items */
+.ql-toolbar.ql-snow .ql-font .ql-picker-item,
+body .ql-toolbar.ql-snow .ql-font .ql-picker-item {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+}
+
+/* Font dropdown item hover states */
+.ql-toolbar.ql-snow .ql-font .ql-picker-item:hover,
+body .ql-toolbar.ql-snow .ql-font .ql-picker-item:hover {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+    opacity: 0.8 !important;
+}
+
+/* Text Align dropdown styling */
+.ql-toolbar.ql-snow .ql-align .ql-picker,
+.ql-toolbar.ql-snow .ql-align .ql-picker-label,
+body .ql-toolbar.ql-snow .ql-align .ql-picker,
+body .ql-toolbar.ql-snow .ql-align .ql-picker-label {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+    border: none !important;
+}
+
+/* Text Align dropdown options container */
+.ql-toolbar.ql-snow .ql-align .ql-picker-options,
+body .ql-toolbar.ql-snow .ql-align .ql-picker-options {
+    background-color: var(--toolbar-dropdown-color) !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Text Align dropdown individual items */
+.ql-toolbar.ql-snow .ql-align .ql-picker-item,
+body .ql-toolbar.ql-snow .ql-align .ql-picker-item {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+}
+
+/* Text Align dropdown item hover states */
+.ql-toolbar.ql-snow .ql-align .ql-picker-item:hover,
+body .ql-toolbar.ql-snow .ql-align .ql-picker-item:hover {
+    background-color: var(--toolbar-dropdown-color) !important;
+    color: var(--toolbar-dropdown-text-color) !important;
+    opacity: 0.8 !important;
+}
+
+/* Dropdown arrow customization for font, header, and align only */
+.ql-toolbar.ql-snow .ql-header .ql-picker-label::before,
+.ql-toolbar.ql-snow .ql-font .ql-picker-label::before,
+.ql-toolbar.ql-snow .ql-align .ql-picker-label::before,
+body .ql-toolbar.ql-snow .ql-header .ql-picker-label::before,
+body .ql-toolbar.ql-snow .ql-font .ql-picker-label::before,
+body .ql-toolbar.ql-snow .ql-align .ql-picker-label::before {
+    color: var(--toolbar-dropdown-text-color) !important;
 }

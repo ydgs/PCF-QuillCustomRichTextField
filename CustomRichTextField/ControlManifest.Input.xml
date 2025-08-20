@@ -6,10 +6,6 @@
     <property name="Default" display-name-key="Default" description-key="Default value for the rich text input" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="HtmlText" display-name-key="HtmlText" description-key="HTML output from the editor" of-type="SingleLine.Text" usage="output" required="false" hidden="true" />
     <property name="headingLevels" display-name-key="Heading Levels" description-key="Comma-separated heading levels to show (e.g. 1,2,3)" of-type="SingleLine.Text" usage="input" required="false" />
-  <!-- <property name="editorBackgroundColor" display-name-key="Editor_Background_Color" description-key="Editor_Background_Color_Desc" of-type="SingleLine.Text" usage="input" />
-  <property name="editorBorderColor" display-name-key="Editor_Border_Color" description-key="Editor_Border_Color_Desc" of-type="SingleLine.Text" usage="input" />
-  <property name="editorBorderRadius" display-name-key="editorBorderRadius_DisplayName" description-key="editorBorderRadius_Description" of-type="SingleLine.Text" usage="input" required="false" />
-  <property name="toolbarColor" display-name-key="Toolbar_Color" description-key="Toolbar_Color_Desc" of-type="SingleLine.Text" usage="input" /> -->
     <property name="showBold" display-name-key="Show Bold" description-key="Show bold button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
     <property name="showItalic" display-name-key="Show Italic" description-key="Show italic button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
     <property name="showUnderline" display-name-key="Show Underline" description-key="Show underline button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
@@ -23,6 +19,21 @@
     <property name="showColor" display-name-key="Show Color" description-key="Show text and background color pickers" of-type="TwoOptions" usage="input" required="false" default-value="true" />
     <property name="showAlign" display-name-key="Show Align" description-key="Show text alignment options" of-type="TwoOptions" usage="input" required="false" default-value="true" />
     <property name="showClean" display-name-key="Show Clean" description-key="Show clean formatting button" of-type="TwoOptions" usage="input" required="false" default-value="true" />
+    <property name="editorBackgroundColor" display-name-key="Editor_Background_Color" description-key="Editor_Background_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="editorBorderColor" display-name-key="Editor_Border_Color" description-key="Editor_Border_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="editorBorderTopColor" display-name-key="Editor_Border_Top_Color" description-key="Editor_Border_Top_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="editorBorderRightColor" display-name-key="Editor_Border_Right_Color" description-key="Editor_Border_Right_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="editorBorderBottomColor" display-name-key="Editor_Border_Bottom_Color" description-key="Editor_Border_Bottom_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="editorBorderLeftColor" display-name-key="Editor_Border_Left_Color" description-key="Editor_Border_Left_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarColor" display-name-key="Toolbar_Color" description-key="Toolbar_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarTextColor" display-name-key="Toolbar_Text_Color" description-key="Toolbar_Text_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarIconColor" display-name-key="Toolbar_Icon_Color" description-key="Toolbar_Icon_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarBorderTopColor" display-name-key="Toolbar_Border_Top_Color" description-key="Toolbar_Border_Top_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarBorderRightColor" display-name-key="Toolbar_Border_Right_Color" description-key="Toolbar_Border_Right_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarBorderBottomColor" display-name-key="Toolbar_Border_Bottom_Color" description-key="Toolbar_Border_Bottom_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarBorderLeftColor" display-name-key="Toolbar_Border_Left_Color" description-key="Toolbar_Border_Left_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarDropdownColor" display-name-key="Toolbar_Dropdown_Color" description-key="Toolbar_Dropdown_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="toolbarDropdownTextColor" display-name-key="Toolbar_Dropdown_Text_Color" description-key="Toolbar_Dropdown_Text_Color_Desc" of-type="SingleLine.Text" usage="input" required="false" />
     <resources>
       <code path="index.ts" order="1"/>
       <css path="css/CustomRichTextField.css" order="1" />
