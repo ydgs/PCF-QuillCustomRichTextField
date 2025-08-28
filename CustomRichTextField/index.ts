@@ -203,6 +203,11 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
             this.isProgrammaticUpdate = false;
         }
 
+        // Notify that HtmlText output is available with initial value
+        if (initialValue && this.notifyOutputChanged) {
+            this.notifyOutputChanged();
+        }
+
         // Update HtmlText live on every text change
         this.quill.on("text-change", () => {
             if (this.isProgrammaticUpdate) return;
@@ -393,6 +398,11 @@ export class CustomRichTextField implements ComponentFramework.StandardControl<I
                 this.quill.clipboard.dangerouslyPasteHTML(newValue, 'silent');
             } finally {
                 this.isProgrammaticUpdate = false;
+            }
+            
+            // Notify that HtmlText output has changed
+            if (this.notifyOutputChanged) {
+                this.notifyOutputChanged();
             }
         }
     }
